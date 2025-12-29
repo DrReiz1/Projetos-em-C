@@ -1,0 +1,582 @@
+//Sistema de Gestão de Oficina Mecânica
+// Versão 1.0
+// Autores: Bruna Vieira e Daniel Rodrigues Reis
+// Descrição: 
+// Data: 21/04/2025
+
+#include <stdio.h> // Biblioteca para entrada e saída de dados
+#include <string.h> // Biblioteca de strings
+#include <stdlib.h> // Bibliteca utilizada no código para encerramento do sistema
+
+struct Dados { //  Criando vetor para armazenar nome e preço das peças
+    char pecas[30];
+    float precoPeca;
+    int quantidade;
+    char funcionarios[40];
+    char nomeDigitado[50];
+    char senhaDigitada[20];
+};
+
+    // Variáveis globais do estoque
+    int filtro_oleo = 150;
+    int pivos = 200;
+    int oleo_5w30 = 100;
+    int pastilhas_freio = 120;
+    int discos_freio = 80;
+    int fluido_freio = 90;
+    int pneus = 60;
+    int terminaisDirecao = 40;
+    
+    // Função para exibir o estoque
+    void mostrarEstoque() {
+    printf("\n| Estoque atual:\n");
+    printf("| - Filtro de óleo: %d unidades\n", filtro_oleo);
+    printf("| - Pivôs/Terminais: %d unidades\n", pivos);
+    printf("| - Óleo 5W30: %d unidades\n", oleo_5w30);
+    printf("| - Pastilhas de freio: %d unidades\n", pastilhas_freio);
+    printf("| - Discos de freio: %d unidades\n", discos_freio);
+    printf("| - Fluido de freio: %d unidades\n", fluido_freio);
+    printf("| - Pneus: %d unidades\n", pneus);
+}
+
+// Função para alterar o estoque
+void alterarEstoque() {
+    int opcaoEstoque;
+    int quantidade;
+    int tipo;
+    do {
+        printf("\n|--- Controle de Estoque ---|\n");
+        printf("| 1. Ver estoque\n");
+        printf("| 2. Adicionar peças\n");
+        printf("| 3. Remover peças\n");
+        printf("| 4. Voltar ao menu principal\n");
+        printf("| Escolha uma opção: ");
+        scanf("%d", &opcaoEstoque);
+
+        switch(opcaoEstoque) {
+            case 1:
+                mostrarEstoque();
+                break;
+
+            case 2:
+                printf("\n| Qual peça deseja adicionar?\n");
+                printf("| 1. Filtro de óleo\n");
+                printf("| 2. Pivôs\n");
+                printf("| 3. Óleo 5W30\n");
+                printf("| 4. Pastilhas de freio\n");
+                printf("| 5. Discos de freio\n");
+                printf("| 6. Fluido de freio\n");
+                printf("| 7. Pneus\n");
+                printf("| 8. Terminais de direção\n");
+                printf("| Opção: ");
+                scanf("%d", &tipo);
+                printf("\n| Quantidade a adicionar: ");
+                scanf("%d", &quantidade);
+
+                if (quantidade < 0) {
+                    printf("| Quantidade inválida!\n");
+                    break;
+                }
+
+                switch(tipo) {
+                    case 1: filtro_oleo += quantidade; break;
+                    case 2: pivos += quantidade; break;
+                    case 3: oleo_5w30 += quantidade; break;
+                    case 4: pastilhas_freio += quantidade; break;
+                    case 5: discos_freio += quantidade; break;
+                    case 6: fluido_freio += quantidade; break;
+                    case 7: pneus += quantidade; break;
+                    case 8: terminaisDirecao += quantidade; break;
+                    
+                    default: printf("| Tipo inválido!\n");
+                }
+                break;
+
+            case 3:
+                printf("\n| Qual peça deseja remover?\n");
+                printf("| 1. Filtro de óleo\n");
+                printf("| 2. Pivôs/Terminais\n");
+                printf("| 3. Óleo 5W30\n");
+                printf("| 4. Pastilhas de freio\n");
+                printf("| 5. Discos de freio\n");
+                printf("| 6. Fluido de freio\n");
+                printf("| 7. Pneus\n ");
+                printf("| 8. Terminais de direção\n");
+                scanf("%d", &tipo);
+                printf("| Quantidade a remover: ");
+                scanf("%d", &quantidade);
+
+                if (quantidade < 0) {
+                    printf("| Quantidade inválida!\n");
+                    break;
+                }
+
+                switch(tipo) {
+                    
+                    case 1: if (filtro_oleo >= quantidade) filtro_oleo -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 2: if (pivos >= quantidade) pivos -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 3: if (oleo_5w30 >= quantidade) oleo_5w30 -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 4: if (pastilhas_freio >= quantidade) pastilhas_freio -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 5: if (discos_freio >= quantidade) discos_freio -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 6: if (fluido_freio >= quantidade) fluido_freio -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 7: if (pneus >= quantidade) 
+                    pneus -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    case 8: if (terminaisDirecao >= quantidade)
+                    terminaisDirecao -= quantidade; else printf("| Estoque insuficiente!\n"); break;
+                    
+                    default: printf("| Tipo inválido!\n");
+                }
+                break;
+
+            case 4:
+                printf("| Voltando ao menu principal...\n");
+                break;
+
+            default:
+                printf("| Opção inválida, tente novamente!\n");
+        }
+    } while (opcaoEstoque != 4);
+}
+
+    //Função pra controle de pagamento
+void controlePagamentos() {
+    printf("\n| Pagamentos pendentes:\n");
+    printf("| - Mercantil Distribuidora: R$ 1.500,00\n");
+    printf("| - Pellegrino: R$ 2.000,00\n");
+}
+
+    // Função global para aprovação do pagamento
+    void aprovarServico() {
+    char aprovacao[5];
+    char pagamento[10];
+    char adicionar[3];
+    
+     //Pergunta se o cliente deseja aprovar o orçamento e realizar o serviço
+    printf("\n| Deseja aprovar o orçamento e realizar o serviço? ");
+    scanf("%s", aprovacao);
+    //Se o cliente aprovar, o serviço será realizado após a confirmação do pagamento
+        if (aprovacao[0] == 's' || aprovacao[0] == 'S') {
+            printf("\n| Serviço aprovado!\n");
+            //Cliente escolhe a forma de pagamento
+            printf("\n| Escolha a forma de pagamento (Crédito / Débito / Pix / Dinheiro): ");
+            scanf("%s", pagamento);
+            //Se o pagamento for confirmado, o serviço será realizado.
+            printf("| Pagamento via %s confirmado. O serviço será realizado em breve.\n", pagamento);
+            } else {
+            //Se não for aprovado, irá retornar ao menu
+            printf("\n| Serviço não aprovado.\n");
+            printf("\n| Retornando ao menu...\n");  
+            printf("...\n");
+            printf("..\n");
+            printf(".\n");
+            }
+            }
+  
+
+    
+    //Função para gestao de funcionários
+void gestaoFuncionarios() {
+    printf("\n| Lista de funcionários:\n");
+    printf("| - João  |   Felipe   |   José   |  Evandro  | - Mecânicos   |\n");
+    printf("| - Maria |   Lucas    |   Júlia  |     -     | - Financeiro  |\n");
+    printf("| - Pedro |  Guilherme |  Murilo  |     -     | - Estoque     |\n");
+    printf("\n| Fornecedor:\n");
+    printf("| - Hyper Autopeças\n");
+}
+
+  // Função de login do gerente
+    int loginGerente() {
+    int opcaoGerente;
+    char senha[20];
+     printf("| Por questão de segurança, insira a senha do administrador: ");
+    scanf("%s", senha);
+
+    if (strcmp(senha, "mecanico123") == 0) {  // 1 = falso, 0 verdadeiro
+        return 1;  // Senha correta
+    } else {
+        printf("| Senha incorreta. Acesso negado.\n");
+        return 0;  // Senha incorreta
+    }
+    } 
+    
+ // Função de login do funcionário
+int loginFuncionario() {
+    char senha[20];
+    printf("| Por favor, insira sua senha: ");
+    scanf("%19s", senha);
+
+    if (strcmp(senha, "funcionario123") == 0) {  // Senha correta
+        return 1;  // Senha correta
+    } else {
+        printf("| Senha incorreta. Acesso negado.\n");
+        return 0;  // Senha incorreta
+    }
+}
+
+// Função de Visualização de Relatórios de Serviços
+void visualizarRelatorios() {
+    printf("\n|============= Relatórios de Serviços =============|\n");
+    printf("| Serviços realizados essa semana:\n");
+    printf("\n| - Troca de óleo - 17 vezes \n");
+    printf("| - Alinhamento e balanceamento - 20 vezes \n");
+    printf("| - Verificação dos freios - 13 vezes \n");
+    printf("| - Troca de pneus - 24 vezes\n");
+    printf("| - Revisão geral - 19 vezes\n");
+    
+}
+
+// Função do menu do funcionário
+void menuFuncionario() {
+     int opcaoFuncionario;
+    char solicitarReposicao[4];
+    char pecaReposicao[50];
+    do {
+        printf("\n|============= Menu do Funcionário =============|\n");
+         printf("| 1. Ver serviços pendentes\n");
+         printf("| 2. Ver estoque atual\n");
+        printf("| 3. Sair\n");
+         printf("| Escolha uma opção: ");
+         scanf("%d", &opcaoFuncionario);
+
+        switch(opcaoFuncionario) {
+             case 1:
+                 printf("\n| Serviços pendentes:\n");
+                 printf("| - Troca de óleo - Cliente: João Silva - Placa: ABC1234\n");
+                 printf("| - Verificação dos freios - Cliente: Maria Souza - Placa: XYZ5678\n");
+                 break;
+
+            case 2:
+                mostrarEstoque();
+                printf("\n| Deseja solicitar reposição de peças?: ");
+                scanf("%s", solicitarReposicao);
+                getchar();
+                if (solicitarReposicao[0] == 's' || solicitarReposicao[0] == 'S') {
+                    printf("| Deseja pedir reposição para qual peça?: ");
+                    scanf(" %[^\n]", pecaReposicao);
+                    printf("| Solicitação registrada. O fornecedor foi notificado.\n");
+             } else {
+             printf("| Nenhuma solicitação enviada.\n");
+             }
+             break;
+
+             case 3:
+              printf("| Saindo do menu do funcionário...\n");
+             break;
+             default:
+                 printf("| Opção inválida. Tente novamente.\n");
+            }
+            
+     } while (opcaoFuncionario != 3);
+
+}
+void menuGerente() {
+    int opcaoGerente;
+    do {
+        printf("\n|============= Menu do Gerente =============|\n");
+        printf("| 1. Controle de Estoque\n");
+        printf("| 2. Controle de Pagamentos\n");
+        printf("| 3. Gestão de funcionários\n");
+        printf("| 4. Sair do sistema\n");
+        printf("| Escolha uma opção: ");
+        scanf ("%d", &opcaoGerente);
+
+        switch(opcaoGerente) {
+        case 1: alterarEstoque();
+            break;
+        case 2: controlePagamentos();
+            break;
+        case 3: gestaoFuncionarios(); 
+            break;
+        case 4: printf("| Saindo do sistema...\n");
+                printf("|..\n");
+                printf("|.\n");
+                exit(0);
+                default: 
+                printf("Opção inválida. Selecione uma opção de 1 a 4.");
+        }
+    } while (opcaoGerente != 4);
+}    
+   
+            
+int main() { 
+    // Declaração de variáveis
+    char resposta[20];
+    char resposta2[5];
+    char nome[100];
+    char endereco[100];
+    char email[100];
+    char nomeCarro[30];
+    int anoCarro;
+    char placa[15];
+    char tipoCombustivel[20];
+    char ultimaManutencao[30];
+    char menuServicos[10];
+    int opcao;
+    char jaCadastrado[100];
+    char aprovacao[5];
+    char pagamento[10];
+    char placaVeiculo [15];
+    float total;
+    int qtdPneus;
+    int i;
+    
+    char senhaDigitada[20];
+    char nomeDigitado[15];
+  
+    
+   struct Dados funcionarios[40];
+   // Funcionários cadastrados no sistema
+   strcpy(funcionarios[0].funcionarios,"João");
+   strcpy(funcionarios[1].funcionarios,"Felipe");
+   strcpy(funcionarios[2].funcionarios,"José");
+   strcpy(funcionarios[3].funcionarios,"Evandro");
+   strcpy(funcionarios[4].funcionarios,"Maria");
+   strcpy(funcionarios[5].funcionarios,"Lucas");
+   strcpy(funcionarios[6].funcionarios,"Júlia");
+   strcpy(funcionarios[7].funcionarios,"Pedro");
+   strcpy(funcionarios[8].funcionarios,"Guilherme");
+   strcpy(funcionarios[9].funcionarios,"Murilo");
+   
+    
+    struct Dados pecas[10];
+    
+    // Peças e preços pré-cadastrados no sistema
+     strcpy(pecas[0].pecas,"Filtro de óleo"); pecas[0].precoPeca = 40; pecas[0].quantidade = 30;
+     strcpy(pecas[1].pecas,"Óleo lubrificante 5W30"); pecas[1].precoPeca = 130; pecas[1].quantidade = 50;
+     strcpy(pecas[2].pecas,"Pivôs de suspensão"); pecas[2].precoPeca = 400; pecas[2].quantidade = 20;
+     strcpy(pecas[3].pecas,"Pastilhas de freio"); pecas[3].precoPeca =  170; pecas[3].quantidade = 30; // peça 3 a 5 são tudo de freio
+     strcpy(pecas[4].pecas,"Discos de freio"); pecas[4].precoPeca = 450; pecas[4].quantidade = 25;
+     strcpy(pecas[5].pecas,"Fluido de freio"); pecas[5].precoPeca = 50; pecas[5].quantidade = 50;
+     strcpy(pecas[6].pecas,"1 pneu "); pecas[6].precoPeca = 350;
+     pecas[6].quantidade = 40;
+     strcpy(pecas[7].pecas,"Terminais de direção"); pecas[7].precoPeca = 350;
+     pecas[7].quantidade = 12;
+     strcpy(pecas[8].pecas,"Velas de ignição"); pecas[8].precoPeca = 350;
+     pecas[8].quantidade = 12;
+
+    // Sistema inicia
+    printf("\n|============= Sistema de Gestão de Oficina Mecânica =============|\n");
+    printf("|\n");
+    printf("| Você é um cliente, funcionário ou gerente? ");
+    scanf("%s", resposta);
+    //Verifica se o usuário é cliente ou funcionário
+    if (resposta[0] == 'c' || resposta[0] == 'C') {  
+    //Se for cliente, pergunta se está cadastrado no sistema
+    printf("| Você já está cadastrado no sistema?: ");
+    scanf(" %s", resposta2);
+    printf("|\n");
+    printf("|=================================================================|");
+    if (resposta2[0] == 'n' || resposta2[0] == 'N') { 
+    //Se não estiver cadastrado ainda, o programa irá cadastrá-lo
+    printf("\n| Antes de continuarmos, precisamos realizar o seu cadastro.\n");
+    //Inicia o cadastro
+    printf ("\n|============= Cadastro do cliente =============|\n");
+    printf("\n| Digite o seu nome completo: ");
+    scanf(" %[^\n]", nome);
+    printf("| Digite o seu endereço: ");
+    scanf(" %[^\n]", endereco);
+    printf("| Digite o seu email para contato: ");
+    scanf(" %[^\n]", email);
+    //Depois do cliente digitar seus dados, o cadastro será concluído.
+    printf("\n| Cadastro realizado com sucesso!\n");
+    printf("| Nome: %s\n", nome);
+    printf("| Endereço: %s\n", endereco);
+    printf("| Email: %s\n", email);
+    //Se o cliente já for cadastrado, ele digita o nome e o sistema encontra seu cadastro
+     } 
+     if (resposta2[0] == 'S' || resposta2[0] == 's') {
+       
+        printf("\n");
+        printf("\n| Digite o seu nome completo: ");
+        scanf(" %[^\n]", jaCadastrado);
+        printf("\n| Procurando no sistema....\n");
+        printf(" ...\n");
+        printf(" ..\n");
+        printf(" .\n");
+        printf("| Usuário encontrado!\n");
+        printf("\n");
+        printf("|=================================================================|");
+        printf("\n");
+        printf ("\n| Bem vindo(a) de volta %s\n", jaCadastrado);
+        printf("\n| Digite a placa do seu veículo: ");
+        scanf("%s", placaVeiculo);
+        printf("\nProcurando no sistema....\n");
+        printf("...\n");
+        printf("..\n");
+        printf(".");
+        printf("\n| Veículo encontrado!\n");
+        } else {
+            //Cadastro do veículo do cliente
+    printf("\n|============= Cadastro do veículo =============|\n");
+    printf("\n| Insira os dados do veículo para o cadastro!\n");
+    //Cliente digita as informações do veículo, como modelo, ano, placa e tipo de combustível
+        printf("\n| Nome do carro e modelo: ");
+        scanf(" %[^\n]", nomeCarro);
+        printf("| Ano do carro: ");
+        scanf(" %d", &anoCarro);
+        printf("| Placa do carro (4 letras, 3 números): ");
+        scanf(" %s", placa);
+        printf("| Tipo de combustível(ex: Gasolina, Álcool, Diesel): ");
+        scanf(" %s", tipoCombustivel);
+        printf("| Última manutenção feita (DD/MM/AAAA):");
+        scanf(" %s", ultimaManutencao);
+        printf("\n| Veículo cadastrado com sucesso!\n");
+        printf("\n| Nome e modelo do carro: %s\n", nomeCarro);
+        printf("| Ano do carro: %d\n", anoCarro);
+        printf("| Placa do carro: %s\n", placa);
+        printf("| Tipo de combustível: %s\n", tipoCombustivel);
+        printf("| Última manutenção: %s\n", ultimaManutencao);
+        }
+        
+           // Pergunta se o cliente deseja consultar o menu de serviços
+        do{
+        printf("\n| Gostaria de consultar nosso menu de serviços?: ");
+        scanf(" %s", menuServicos);
+        
+        if (menuServicos[0] == 's' || menuServicos[0] == 'S') { 
+            do {
+        // Menu de serviços
+        printf("\n|=============  Menu de Serviços =============|\n");
+        printf("| 1. Troca de óleo\n");
+        printf("| 2. Alinhamento e balanceamento\n");
+        printf("| 3. Verificação dos freios\n");
+        printf("| 4. Troca de pneus\n");
+        printf("| 5. Revisão geral\n");
+        printf("| 6. Garantia de serviços\n");
+        printf("| 7. Sair do sistema\n");
+        printf("| Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                // Troca de óleo
+                printf("\n| Serviço selecionado: Troca de óleo.\n");
+                printf("| - Peças utilizadas:\n");
+                // Exibe a peça e o preço
+                printf("| - %s: R$%.2f\n", pecas[0].pecas, pecas[0].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[1].pecas, pecas[1].precoPeca);
+                printf("| - Mão de obra: R$50.00\n");
+                printf("| - Tempo médio: 1 hora\n");
+                // Exibe o total mais o valor de mão de obra
+                printf("| - Valor total: R$%.2f\n", pecas[0].precoPeca + pecas[1].precoPeca + 50.00);
+                aprovarServico();
+                break;
+
+            case 2:
+                // Alinhamento e balanceamento
+                printf("\n| Serviço selecionado: Alinhamento e balanceamento.\n");
+                printf("| - Peças utilizadas:\n");
+                // Exibe a peça e o preço
+                printf("| - %s: R$%.2f\n", pecas[2].pecas, pecas[2].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[7].pecas, pecas[7].precoPeca);
+                printf("| - Mão de obra: R$50.00\n");
+                printf("| - Tempo médio: 3 horas\n");
+                // Exibe o total mais o valor de mão de obra
+                printf("| - Valor total: R$%.2f\n", pecas[2].precoPeca + pecas[7].precoPeca + 50.00);
+                aprovarServico();
+                break;
+
+            case 3:
+                // Verificação dos freios
+                printf("\n| Serviço selecionado: Verificação dos freios.\n");
+                printf("| - Peças utilizadas:\n");
+                printf("| - %s: R$%.2f\n", pecas[3].pecas, pecas[3].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[4].pecas, pecas[4].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[5].pecas, pecas[5].precoPeca);
+                printf("| - Mão de obra: R$50.00\n");
+                printf("| - Tempo médio: 4 horas\n");
+                printf("| - Valor total: R$%.2f\n", pecas[3].precoPeca + pecas[4].precoPeca + pecas[5].precoPeca + 50.00);
+                aprovarServico();
+                break;
+
+            case 4:
+                // Troca de pneus
+                printf("\n| Serviço selecionado: Troca de pneus.\n");
+                printf("| Quantos pneus gostaria de trocar? (1 a 4): ");
+                scanf("%d", &qtdPneus);
+
+                if (qtdPneus < 1 || qtdPneus > 4) {
+                    printf("| Quantidade inválida. Por favor, escolha entre 1 e 4 pneus.\n");
+                } else {
+                    if (pecas[6].quantidade >= qtdPneus) {
+                        total = pecas[6].precoPeca * qtdPneus + 100;
+                        printf("| Peças utilizadas:\n");
+                        printf("| - %d x %s: R$%.2f cada\n", qtdPneus, pecas[6].pecas, pecas[6].precoPeca);
+                        printf("| - Mão de obra: R$100.00\n");
+                        printf("| - Tempo estimado: 40 - 120 minutos\n");
+                        printf("| - Valor total: R$%.2f\n", total);
+                        aprovarServico();
+                    } else {
+                        printf("| ERRO: Estoque insuficiente. Temos apenas %d pneu(s) em estoque.\n", pecas[6].quantidade);
+                    }
+                }
+                break;
+
+            case 5:
+                // Revisão geral
+                printf("\n| Serviço selecionado: Revisão geral.\n");
+                printf("| Peças utilizadas: ");
+                printf("| - %s: R$%.2f\n", pecas[1].pecas, pecas[1].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[0].pecas, pecas[0].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[8].pecas, pecas[8].precoPeca);
+                printf("| - %s: R$%.2f\n", pecas[5].pecas, pecas[5].precoPeca);
+                printf("| - Mão de obra: R$ 40.00\n");
+                printf("| Tempo estimado: 8 horas\n");
+                printf("| Valor total: R$%.2f\n", total);
+
+                aprovarServico();
+                break;
+
+            case 6:
+                // Garantia
+                printf("\n| Garantia de serviços:\n");
+                printf("\n| Troca de óleo: 90 dias\n");
+                printf("| Alinhamento e balanceamento: 90 dias\n");
+                printf("| Verificação dos freios: 90 dias\n");
+                printf("| Troca de pneus: 90 dias\n");
+                printf("| Revisão geral: 90 dias\n");
+                printf("\n| - Voltando ao menu de serviços...\n");
+                break;
+
+            case 7:
+                printf("\n| Saindo do sistema...\n");
+                break;
+
+            default:
+                printf("| Digite um número de 1 a 7.\n");
+                break;
+        }
+
+        } while (opcao != 7);
+        } else {
+            printf("| Obrigado por usar nossos serviços! Até logo.\n");
+        }
+        } while (opcao != 7);
+    } 
+    
+          else if (resposta[0] == 'G' || resposta[0] == 'g') { 
+        printf("| Bem-vindo, gerente!\n");
+        if (loginGerente() == 1) {
+            do {
+                menuGerente();
+            } while (loginGerente() == 1);  
+        }
+    }
+   else if (resposta[0] == 'F' || resposta[0] == 'f') { 
+        printf("| Bem-vindo!\n");
+        if (loginFuncionario() == 1) {
+            menuFuncionario();  
+        }
+    }
+    
+    
+            
+    return 0;
+}
